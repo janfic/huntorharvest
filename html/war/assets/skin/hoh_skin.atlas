@@ -1,0 +1,86 @@
+
+hoh_skin.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+button
+  rotate: false
+  xy: 505, 539
+  size: 7, 7
+  split: 3, 3, 3, 3
+  orig: 7, 7
+  offset: 0, 0
+  index: -1
+button_down
+  rotate: false
+  xy: 577, 575
+  size: 7, 7
+  split: 3, 3, 3, 3
+  orig: 7, 7
+  offset: 0, 0
+  index: -1
+button_hay
+  rotate: false
+  xy: 505, 548
+  size: 70, 34
+  split: 26, 42, 16, 16
+  pad: 14, 44, 8, 10
+  orig: 70, 34
+  offset: 0, 0
+  index: -1
+button_pig
+  rotate: false
+  xy: 259, 500
+  size: 68, 34
+  split: 25, 41, 14, 18
+  pad: 18, 30, 7, 8
+  orig: 68, 34
+  offset: 0, 0
+  index: -1
+cursor
+  rotate: false
+  xy: 259, 497
+  size: 1, 1
+  split: 0, 0, 0, 0
+  orig: 1, 1
+  offset: 0, 0
+  index: -1
+selected
+  rotate: false
+  xy: 329, 533
+  size: 1, 1
+  split: 0, 0, 0, 0
+  orig: 1, 1
+  offset: 0, 0
+  index: -1
+text_entry
+  rotate: false
+  xy: 1, 11
+  size: 7, 7
+  split: 2, 3, 2, 3
+  pad: 3, 3, 3, 3
+  orig: 7, 7
+  offset: 0, 0
+  index: -1
+Lucida Console 12px_0
+  rotate: false
+  xy: 1, 278
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+Lucida Console_0
+  rotate: false
+  xy: 1, 20
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+Lucida Sans Regular
+  rotate: false
+  xy: 1, 536
+  size: 502, 46
+  orig: 502, 46
+  offset: 0, 0
+  index: -1
