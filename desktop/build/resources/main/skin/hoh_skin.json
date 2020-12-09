@@ -1,0 +1,86 @@
+{
+com.badlogic.gdx.graphics.g2d.BitmapFont: {
+	Lucida_Console: {
+		file: Lucida Console.fnt
+	}
+	Lucida_Console_12px: {
+		file: Lucida Console 12px.fnt
+	}
+	Lucida_Sans_Regular: {
+		file: Lucida Sans Regular.fnt
+	}
+}
+com.badlogic.gdx.graphics.Color: {
+	RGBA_0_0_0_255: {
+		r: 0
+		g: 0
+		b: 0
+		a: 1
+	}
+	RGBA_255_234_2_255: {
+		r: 1
+		g: 0.91827005
+		b: 0.00999999
+		a: 1
+	}
+	RGBA_255_255_255_255: {
+		r: 1
+		g: 1
+		b: 1
+		a: 1
+	}
+	RGBA_36_194_0_255: {
+		r: 0.10546925
+		g: 0.55333334
+		b: 0
+		a: 1
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {
+	default: {
+		up: button
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
+	default: {
+		font: Lucida_Sans_Regular
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
+	default: {
+		font: Lucida_Sans_Regular
+		fontColor: RGBA_255_255_255_255
+		overFontColor: RGBA_0_0_0_255
+		up: button
+		down: button_down
+	}
+	hay: {
+		font: Lucida_Sans_Regular
+		fontColor: RGBA_255_234_2_255
+		overFontColor: RGBA_255_255_255_255
+		up: button_hay
+	}
+	pig: {
+		font: Lucida_Sans_Regular
+		fontColor: RGBA_0_0_0_255
+		overFontColor: RGBA_255_255_255_255
+		up: button_pig
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {
+	default: {
+		font: Lucida_Console_12px
+		fontColor: RGBA_0_0_0_255
+		focusedFontColor: RGBA_36_194_0_255
+		background: text_entry
+		cursor: cursor
+		selection: selected
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.TextTooltip$TextTooltipStyle: {
+	default: {
+		label: default
+		background: button_down
+	}
+}
+}
