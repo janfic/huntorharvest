@@ -71,7 +71,8 @@ public class LoginStage extends Stage {
             public void changed(ChangeListener.ChangeEvent ce, Actor actor) {
                 socket = null;
                 try {
-                    socket = Gdx.net.newClientSocket(Net.Protocol.TCP, "35.169.235.24", 7272, null);
+                    //35.169.235.24
+                    socket = Gdx.net.newClientSocket(Net.Protocol.TCP, "localhost", 7272, null);
                 } catch (GdxRuntimeException e) {
                     responseStatus.setVisible(true);
                     responseStatus.setColor(Color.YELLOW);

@@ -83,7 +83,7 @@ public class Match {
     private void endRound() {
         int aIncome = 0, bIncome = 0;
         if (aMove.equals("HUNT") && bMove.equals("HUNT")) {
-            aIncome = bIncome = 5;
+            aIncome = bIncome = hunt;
         }
         if (aMove.equals("HARVEST")) {
             aIncome += aHarvest;

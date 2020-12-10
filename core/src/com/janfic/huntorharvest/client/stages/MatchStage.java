@@ -24,14 +24,16 @@ import com.janfic.huntorharvest.Messages;
  * @author Jan Fic
  */
 public class MatchStage extends Stage {
-    
+
     private final Socket socket;
     private String opponent;
+    private String winner;
     private ClientPlayer player;
-    
-    private final TextButton hunt, harvest, hunt_amount, harvest_amount;
+
+    private final TextButton hunt, harvest, hunt_amount, harvest_amount, leaveMatch;
     private final Label statusLabel;
-    
+    Table table;
+
     private boolean start = false, end = false;
     Texture[] seasons;
     Drawable[] currentSeason;
@@ -39,11 +41,11 @@ public class MatchStage extends Stage {
     Image money;
     Label score;
     int turn;
-    
+
     public MatchStage(Socket socket) {
         super(new FitViewport(200, 400));
         this.socket = socket;
-        
+
         seasons = new Texture[]{
             new Texture("background_spring.png"),
             new Texture("background_summer.png"),
@@ -56,16 +58,16 @@ public class MatchStage extends Stage {
             new SpriteDrawable(new Sprite(new Texture("fall.png"))),
             new SpriteDrawable(new Sprite(new Texture("winter.png")))
         };
-        
+
         turn = 1;
-        
+
         season = new Image();
         season.setDrawable(currentSeason[turn - 1]);
-        
-        Table table = new Table();
+
+        table = new Table();
         table.setFillParent(true);
         table.defaults().space(10, 15, 10, 15);
-        
+
         hunt_amount = new TextButton("5", HuntOrHarvestGame.skin, "pig");
         harvest_amount = new TextButton("5", HuntOrHarvestGame.skin, "hay");
         hunt = new TextButton("HUNT", HuntOrHarvestGame.skin);
@@ -73,14 +75,26 @@ public class MatchStage extends Stage {
         statusLabel = new Label("Waiting for Opponent...", HuntOrHarvestGame.skin);
         score = new Label("0", HuntOrHarvestGame.skin);
         money = new Image(new SpriteDrawable(new Sprite(new Texture("money.png"))));
-        
+        leaveMatch = new TextButton("Done", HuntOrHarvestGame.skin);
+
         hunt_amount.setVisible(false);
         harvest_amount.setVisible(false);
         hunt.setVisible(false);
         harvest.setVisible(false);
         hunt.setDisabled(true);
         harvest.setDisabled(true);
-        
+        leaveMatch.setVisible(false);
+        leaveMatch.setDisabled(true);
+
+        this.leaveMatch.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeListener.ChangeEvent ce, Actor actor) {
+                HuntOrHarvestGame.login.reset();
+                HuntOrHarvestGame.current = HuntOrHarvestGame.login;
+                Gdx.input.setInputProcessor(HuntOrHarvestGame.login);
+            }
+        });
+
         this.hunt.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent ce, Actor actor) {
@@ -106,7 +120,7 @@ public class MatchStage extends Stage {
                 }).start();
             }
         });
-        
+
         this.harvest.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent ce, Actor actor) {
@@ -132,7 +146,7 @@ public class MatchStage extends Stage {
                 }).start();
             }
         });
-        
+
         table.add(season).colspan(2).row();
         table.add(money).right();
         table.add(score).left().row();
@@ -140,10 +154,10 @@ public class MatchStage extends Stage {
         table.add(hunt_amount, harvest_amount).row();
         table.add(hunt, harvest).row();
         table.top();
-        
+
         this.addActor(table);
     }
-    
+
     @Override
     public void act() {
         super.act();
@@ -160,6 +174,9 @@ public class MatchStage extends Stage {
                             if (response.get("status").equals("OK")) {
                                 ready = true;
                                 if (response.get("currentRound").equals("END")) {
+                                    winner = response.get("victor");
+                                    table.clearChildren();
+                                    score.setText(response.get("score"));
                                     end = true;
                                     return;
                                 }
@@ -174,7 +191,7 @@ public class MatchStage extends Stage {
                             }
                         }
                     } while (!ready);
-                    
+
                     hunt_amount.setVisible(true);
                     harvest_amount.setVisible(true);
                     hunt.setVisible(true);
@@ -185,10 +202,17 @@ public class MatchStage extends Stage {
             }).start();
         }
         if (end) {
-            end();
+            String s = winner.equals("TIE") ? "TIE" : winner.equals(player.getName()) ? "You WON!" : winner + " WON!";
+            table.add(new Label(s, HuntOrHarvestGame.skin)).row();
+            table.add(new Label("You gained: " + score.getText() + " points!", HuntOrHarvestGame.skin)).row();
+            table.add(leaveMatch).padBottom(100);
+            table.center();
+            leaveMatch.setVisible(true);
+            leaveMatch.setDisabled(false);
+            end = false;
         }
     }
-    
+
     @Override
     public void draw() {
         getBatch().begin();
@@ -196,7 +220,7 @@ public class MatchStage extends Stage {
         getBatch().end();
         super.draw(); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
     public void start(ClientPlayer player) {
         this.player = player;
         new Thread(new Runnable() {
@@ -205,7 +229,7 @@ public class MatchStage extends Stage {
                 ObjectMap<String, String> message = new ObjectMap<>();
                 message.put("action", "START_MATCH");
                 Messages.sendMessage(socket, message);
-                
+
                 ObjectMap<String, String> response;
                 boolean ready = false;
                 do {
@@ -223,7 +247,7 @@ public class MatchStage extends Stage {
                         }
                     }
                 } while (!ready);
-                
+
                 hunt_amount.setVisible(true);
                 harvest_amount.setVisible(true);
                 hunt.setVisible(true);
@@ -233,15 +257,9 @@ public class MatchStage extends Stage {
             }
         }).start();
     }
-    
-    public void end() {
-        HuntOrHarvestGame.login.reset();
-        HuntOrHarvestGame.current = HuntOrHarvestGame.login;
-        Gdx.input.setInputProcessor(HuntOrHarvestGame.login);
-    }
-    
+
     public void setOpponent(String opponent) {
         this.opponent = opponent;
     }
-    
+
 }
